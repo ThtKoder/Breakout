@@ -13,10 +13,13 @@ import java.awt.event.MouseEvent;
 import acm.graphics.*;
 import acm.program.*;
 
+import javax.swing.*;
+
 public class MouseReporter extends GraphicsProgram {
 
 	// A constant for the x value of the label
-	private static final int INDENT = 20;
+
+	private static final int INDENT = 300;
 	
 	// This variable is visible to the entire program
 	// It is called an "instance" variable
@@ -36,8 +39,31 @@ public class MouseReporter extends GraphicsProgram {
 		add(label, INDENT, getHeight()/2);
 	}
 
+	public void mouseClicked(MouseEvent e){
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+
+		System.out.println("X:" + e.getX() + " Y:" + e.getY() + " Indent:" + INDENT + " Y:" + getHeight()/2);
+		System.out.println(label.getColor() == Color.BLUE);
+		if (mouseX == INDENT && mouseY == getHeight()/2 && label.getColor() == (Color.BLUE)) {
+			label.setColor(Color.RED);
+		}
+		if (mouseX == INDENT && mouseY == getHeight()/2 && label.getColor() == (Color.RED)) {
+			label.setColor(Color.BLUE);
+		}
+		System.out.println("mouse clicked");
+	}
+
+	public void mouseMoved(MouseEvent e){
+		int x = e.getX();
+		int y = e.getY();
+		label.setLabel(x + "," + y);
+		label.setLocation(e.getX(),e.getY());
+	}
+
 	public static void main(String[] args) {
 		new MouseReporter().start();
+
 	}
 
 }

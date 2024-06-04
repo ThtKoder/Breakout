@@ -43,8 +43,17 @@ public class PrimeChecker extends ConsoleProgram {
 	 * @return true if n is prime and false otherwise
 	 */
 	public boolean isPrime(int n) {
+		if(n <= 1){ //throwaway cases
+			return false;
+		}
 
-		return true; // this is only here so the program compiles
+		for(int i = 2; i<n; i++) { //all other cases
+			if (n % i == 0) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public static void main(String[] args) {
