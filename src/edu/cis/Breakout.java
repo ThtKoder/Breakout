@@ -125,6 +125,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 		removeAll();
 
 		difficulty();
+
+		//primary setupMenu that user is directed to, after making playgame selection from openscreen
 	}
 
 	public void setupGame2(){
@@ -160,6 +162,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	public String hardScores;
 
 	public void openScreen() throws FileNotFoundException {
+		//welcome menu
+
 		getGCanvas().setSize((int) CANVAS_WIDTH, (int) CANVAS_HEIGHT);
 
 		//messages on screen
@@ -184,8 +188,6 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 		thirdLine = new JLabel(""); //(easyScores);
 		fourthLine = new JLabel(""); //(mediumScores);
 		fifthLine = new JLabel(""); //(hardScores);
-
-		 //
 
 		//buttons
 		option1 = new JButton("Play Game");
@@ -220,6 +222,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void saveScore(){
+		//menu for allowing the user to choose to save their score in a file or not
+
 		firstLine = new JLabel("Welcome to Sander's Breakout!");
 		firstLine.setSize(100,100);
 		firstLine.setLocation(20, 80);
@@ -249,6 +253,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void difficulty(){
+		//allowing the user to choose their level of difficulty
+
 		firstLine = new JLabel("Welcome to Sander's Breakout!");
 		firstLine.setSize(100,100);
 		firstLine.setLocation(20, 80);
@@ -285,6 +291,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void setupBricks() {
+		//method that draws out all the bricks on the canvas
+
 		double x = BRICK_SEP; // Start x position with the separation
 		double y = BRICK_Y_OFFSET;
 
@@ -321,6 +329,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void setupPaddle(){
+		//adds the paddle to the
+
 		paddle.setFillColor(paddleColor);
 		paddle.setFilled(true);
 		paddle.setLocation(CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
@@ -328,20 +338,24 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void disappearMouse(){
-		// Transparent 16 x 16 pixel cursor image.
+		//method that removes the mouse above the paddle
+
+		// transparent 16 x 16 pixel cursor image.
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
-		// Create a new blank cursor.
+		// create a new blank cursor.
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
 				cursorImg, new Point(0, 0), "blank cursor");
 
-		// Set the blank cursor to the JFrame.
+		// set the blank cursor to the JFrame.
 		setCursor(blankCursor);
 
 		//TODO CODE BORROWED + Adapted from StackOverflow
 	}
 
 	public void setupBall(){
+		//method that adds the ball to screen while also making it appear black
+
 		ball.setFillColor(Color.BLACK);
 		ball.setFilled(true);
 		add(ball);
@@ -350,6 +364,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	private boolean gameOverValue = false;
 
 	public void play(){
+		//the main play method that runs until the user 'Games Over'
+
 		infoDisplay();
 
 		vx = rgen.nextDouble(VELOCITY_X_MIN, VELOCITY_X_MAX);
@@ -391,6 +407,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	private boolean userHasMovedMouse = false;
 
 	public void infoDisplay(){
+		//method that displays the score of the user on the screen with constant updates
+
 		remove(scoreLabel);//.setVisible(false);
 		remove(livesLabel);//.setVisible(false);
 
@@ -411,6 +429,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	private void moveBall() throws IOException {
+		//main method that handles the movements of the balls, and calls on collisions to see if the ball has collided
+
 		if(NTURNS <= 0){
 			gameOver();
 		}
@@ -451,12 +471,16 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void setBall(){
+		//resets the balls location when the user has lost a life
+
 		ball.setLocation(CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 70);
 		ball.move(0,0);
 		pause(3000);
 	}
 
 	private GObject getCollidingObject() {
+		//works with moveBall() to determine if the ball has had a collision
+
 		if((getElementAt(ball.getX(), ball.getY())) != null) {
 			return getElementAt(ball.getX(), ball.getY());
 		}
@@ -479,6 +503,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 
 
 	public void gameOver() throws IOException {
+		//method that handles game over scenarios
+
 		removeAll();
 
 		if(difficultyValue == "Easy"){
@@ -519,6 +545,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	public boolean valueReceived = false;
 
 	public void infiniteLoop(){
+		//infinite loop that plays while waiting for user input from the gameOver() menu
+
 		while(!valueReceived){
 
 		}
@@ -526,7 +554,9 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		paddle.setFillColor(Color.GRAY);
+		//method that detects the user's mouse movements and then moves the paddle accordingly
+
+		paddle.setFillColor(paddleColor);
 		paddle.setFilled(true);
 
 		int mouseX = e.getX();
@@ -543,6 +573,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		//method that handles all button clicking and redirections
+
 		String command = event.getActionCommand();
 		if ("Play Game".equals(command)) {
 			valueReceived = true;
@@ -642,6 +674,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	//TODO Finish the save score method
 
 	public void saveScore(String arrayName) throws IOException {
+		//method that saves the scores of the user if the user has chosen to save their score, in the appropriate file
+
 		String filename = easyPathFile;
 		if(difficultyValue == "easy"){
 			filename = easyPathFile;
@@ -666,6 +700,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void settingsMenu() {
+		//settings overview menu where the user can go onto customize their experience
+
 		removeAll();
 		remove(firstLine);
 		remove(secondLine);
@@ -704,6 +740,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void colorOfBar() {
+		//menu where the user can choose to change the paddle color
+
 		removeAll();
 		remove(option1);
 		remove(option2);
@@ -745,6 +783,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void backgroundMusic() {
+		//menu where the user can adjust background music
+
 		removeAll();
 		remove(option1);
 		remove(option2);
@@ -784,6 +824,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	public Clip clip;
 
 	public void playBackgroundMusic() {
+		//method that runs and loops background music for the entirety of runtime (unless stopped in the backgroundMusic() menu)
+
 		try {
 			URL url = this.getClass().getClassLoader().getResource("fluffingaduck.wav");
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
@@ -797,6 +839,8 @@ public class Breakout extends GraphicsProgram implements ActionListener {
 	}
 
 	public void stopBackgroundMusic() {
+		//method that stops the background music from playing
+
 		if (clip != null && clip.isRunning()) {
 			clip.stop();
 		}
